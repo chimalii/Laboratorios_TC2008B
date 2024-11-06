@@ -2,19 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This player controller class will update the events from the vehicle player.
+/// Standar coding documentation can be found in 
+/// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/documentation-comments
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Vehicle speed
+    public float speed = 5.0f;
+
+    // Vehicle turn speed
+    public float turnSpeed = 0.0f;
+
+    // User inputs
+    public float horizontalInput;
+    public float forwardInput;
+
+    /// <summary>
+    /// This method is called before the first frame update
+    /// </summary>
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// This method is called once per frame
+    /// </summary>
     void Update()
     {
-        //Mover vehículo hacia adelante infinitamente
-        //transform.Translate(0,0,1);
-        transform.Translate(Vector3.forward);
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
+
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
     }
 }
